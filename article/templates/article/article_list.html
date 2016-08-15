@@ -1,0 +1,28 @@
+{% extends 'article/base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+<h5><a href="{% url 'article.views.article_new'%}">心情不错？ 写点儿东西吧~~~</a></h5>
+{% endif %}
+{% for post in posts %}
+<div class="post">
+<!--<h1><a href="">{{ post.title }}</a></h1>-->
+<h1><a href="{% url 'article.views.article_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+<p>published: {{ post.published_date }}</p>
+<p>{{ post.text|linebreaks }}</p>
+</div>
+{% endfor %}
+<div class="pagination">
+    <span class="step-links">
+        {% if posts.has_previous %}
+            <a href ="?page={{contacts.previous_page_number}}">previous</a>
+        {% endif %}
+        <span class="current">
+        Page{{posts.number}} of {{posts.paginator.num_pages}}
+        </span>
+        {% if posts.has_next %}
+            <a href ="?page={{posts.next_page_number}}">next</a>
+        {% endif %}
+        </span>
+    </div>
+
+{% endblock %}
